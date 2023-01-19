@@ -65,6 +65,8 @@ class LoginWithGoogleController {
               content: 'Erro ao acessar a conta. Tente novamente.',
             ),
           );
+          log('ERROR FIREBASE', error: e);
+          throw Exception('Erro ao acessar credencial de usuário');
         }
       }
     }
@@ -85,6 +87,8 @@ class LoginWithGoogleController {
           content: 'Erro ao sair. Tente novamente.',
         ),
       );
+      log('ERROR FIREBASE', error: e);
+      throw Exception('Erro ao acessar credencial de usuário');
     }
   }
 }
