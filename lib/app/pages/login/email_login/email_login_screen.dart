@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,85 +18,130 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final loginWithEmailInstance = Get.put(LoginWithEmailController());
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final loginWithEmailInstance = Get.put(LoginWithEmailController());
+    final formkey = GlobalKey<FormState>();
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-          body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Obx(
-            () => Visibility(
-              visible: loginWithEmailInstance.isRegister.value,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: CustomTextField.email(
+          body: Form(
+        key: formkey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(
+              () => Visibility(
+                visible: loginWithEmailInstance.isRegister.value,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: CustomTextField.email(
                     textEditingController: usernameController,
-                    hintText: 'Nome de usuário'),
+                    hintText: 'Nome de usuário',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'O nome de usuário não pode ser vazio';
+                      } else if (value.length < 6) {
+                        return 'O nome de usuário precisa ter no mínimo 6 caracteres';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-          CustomTextField.email(
-            textEditingController: emailController,
-            hintText: 'Email',
-          ),
-          const SizedBox(height: 10),
-          CustomTextField.password(
-            textEditingController: passwordController,
-            hintText: 'Senha',
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CustomElevatedButton(
-                icon: Icons.login,
-                text: 'Entrar',
-                onPressed: () {
-                  if (loginWithEmailInstance.isRegister.value == true) {
-                    loginWithEmailInstance.createAccount(
-                        username: usernameController.text,
-                        emailAddress: emailController.text,
-                        password: passwordController.text,
-                        context: context);
-                  } else {
-                    loginWithEmailInstance.loginWithEmailAndPassword(
-                        emailAddress: emailController.text,
-                        password: passwordController.text,
-                        context: context);
-                  }
-                }),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() => Text(
-                    loginWithEmailInstance.isRegister.value == false
-                        ? 'Ainda não possui uma conta?'
-                        : 'Já possui uma conta?',
-                    style: const TextStyle(fontSize: 16, letterSpacing: -1),
-                  )),
-              TextButton(
-                  onPressed: () {
-                    loginWithEmailInstance.swicthMode();
-                    print(loginWithEmailInstance.isRegister.value);
-                  },
-                  child: Obx(() => Text(
-                        loginWithEmailInstance.isRegister.value == false
-                            ? 'Cadastre-se!'
-                            : 'Faça login!',
-                        style: const TextStyle(
-                            fontSize: 18,
-                            letterSpacing: -.9,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            color: Colors.black87),
-                      ))),
-            ],
-          ),
-        ],
+            CustomTextField.email(
+              textEditingController: emailController,
+              hintText: 'Email',
+              validator: (_email) {
+                final email = _email ?? '';
+                if (email.trim().isEmpty) {
+                  return 'Email não pode ser vazio.';
+                } else if (!email.trim().contains('@')) {
+                  return 'Informe um Email válido.';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 10),
+            CustomTextField.password(
+              textEditingController: passwordController,
+              hintText: 'Senha',
+              validator: (_password) {
+                final password = _password ?? '';
+                if (password.isEmpty || password.length < 6) {
+                  return 'Informe uma senha válida.';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 10),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Obx(
+                  () => CustomElevatedButton(
+                      icon: Icons.login,
+                      text: loginWithEmailInstance.isRegister.value == false
+                          ? 'Entrar'
+                          : 'Criar conta',
+                      onPressed: () {
+                        if (formkey.currentState!.validate()) {
+                          if (loginWithEmailInstance.isRegister.value == true) {
+                            loginWithEmailInstance.createAccount(
+                                username: usernameController.text.trim(),
+                                emailAddress: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                context: context);
+                          } else {
+                            loginWithEmailInstance.loginWithEmailAndPassword(
+                                emailAddress: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                context: context);
+                          }
+                        }
+                      }),
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Obx(() => Text(
+                      loginWithEmailInstance.isRegister.value == false
+                          ? 'Ainda não possui uma conta?'
+                          : 'Já possui uma conta?',
+                      style: const TextStyle(fontSize: 16, letterSpacing: -1),
+                    )),
+                TextButton(
+                    style: ButtonStyle(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.black12)),
+                    onPressed: () {
+                      loginWithEmailInstance.swicthMode();
+                    },
+                    child: Obx(() => Text(
+                          loginWithEmailInstance.isRegister.value == false
+                              ? 'Cadastre-se!'
+                              : 'Faça login!',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              letterSpacing: -.9,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              color: Colors.black87),
+                        ))),
+              ],
+            ),
+          ],
+        ),
       )),
     );
   }
