@@ -1,5 +1,5 @@
-import 'package:exclusive_diary/app/pages/login/email_login/controller/login_with_email_controller.dart';
-import 'package:exclusive_diary/app/pages/login/google_login/controller/login_with_google_controller.dart';
+import 'package:exclusive_diary/app/pages/login/email/controller/login_with_email_controller.dart';
+import 'package:exclusive_diary/app/pages/login/google/controller/login_with_google_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

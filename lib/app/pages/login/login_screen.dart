@@ -1,10 +1,10 @@
-import 'package:exclusive_diary/app/pages/login/email_login/email_login_screen.dart';
+import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
 import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'google_login/controller/login_with_google_controller.dart';
-import 'google_login/widgets/custom_elevatedbutton.dart';
+import 'google/controller/login_with_google_controller.dart';
+import 'google/widgets/custom_elevatedbutton.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

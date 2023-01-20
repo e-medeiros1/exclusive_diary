@@ -1,12 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'package:exclusive_diary/app/pages/login/email_login/controller/login_with_email_controller.dart';
+import 'package:exclusive_diary/app/pages/login/email/controller/login_with_email_controller.dart';
 import 'package:exclusive_diary/app/pages/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../email_login/widgets/custom_text_field.dart';
-import '../google_login/widgets/custom_elevatedbutton.dart';
+import '../email/widgets/custom_text_field.dart';
+import '../google/widgets/custom_elevatedbutton.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

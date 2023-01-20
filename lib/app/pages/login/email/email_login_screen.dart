@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../google_login/widgets/custom_elevatedbutton.dart';
+import '../google/widgets/custom_elevatedbutton.dart';
 import 'controller/login_with_email_controller.dart';
 import 'widgets/custom_text_field.dart';
 
