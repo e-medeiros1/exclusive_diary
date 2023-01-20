@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Obx(
                   () => CustomElevatedButton(
                       icon: Icons.login,
-                      text: loginWithEmailInstance.isRegister.value == false
+                      text: !loginWithEmailInstance.isRegister.value
                           ? 'Entrar'
                           : 'Criar conta',
                       onPressed: () {
@@ -115,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Obx(() => Text(
-                      loginWithEmailInstance.isRegister.value == false
+                      !loginWithEmailInstance.isRegister.value
                           ? 'Ainda não possui uma conta?'
                           : 'Já possui uma conta?',
                       style: const TextStyle(fontSize: 16, letterSpacing: -1),
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       loginWithEmailInstance.swicthMode();
                     },
                     child: Obx(() => Text(
-                          loginWithEmailInstance.isRegister.value == false
+                          !loginWithEmailInstance.isRegister.value
                               ? 'Cadastre-se!'
                               : 'Faça login!',
                           style: const TextStyle(
