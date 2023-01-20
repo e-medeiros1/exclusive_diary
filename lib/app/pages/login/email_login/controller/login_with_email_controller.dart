@@ -1,50 +1,45 @@
 import 'dart:developer';
 
-import 'package:exclusive_diary/app/core/components/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../home/home_screen.dart';
+import '../../login_screen.dart';
+
 class LoginWithEmailController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
-  final CustomSnackbar snackbarInstance = Get.put(CustomSnackbar());
+  late final Rx<User?> user;
   var isRegister = false.obs;
 
-  loginWithEmailAndPassword({
+  Future<void> loginWithEmailAndPassword({
     required String emailAddress,
     required String password,
     required BuildContext context,
   }) async {
-    final navigator = ScaffoldMessenger.of(context);
     try {
       instance.signInWithEmailAndPassword(
           email: emailAddress, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        navigator.showSnackBar(
-          snackbarInstance.customSnackBar(
-            content: 'Usuário não cadastrado.',
-          ),
-        );
+        Get.snackbar('Erro', 'Usuário não cadastrado');
         log('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        navigator.showSnackBar(
-          snackbarInstance.customSnackBar(
-            content: 'Senha incorreta.',
-          ),
-        );
+        Get.snackbar('Erro!', 'Senha incorreta');
         log('Wrong password provided for that user.');
       }
+    } catch (e) {
+      Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
+      log('ERROR FIREBASE', error: e);
     }
   }
 
-  createAccount({
+  Future<void> createAccount({
     required String username,
     required String emailAddress,
     required String password,
     required BuildContext context,
   }) async {
-    final navigator = ScaffoldMessenger.of(context);
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
@@ -52,32 +47,52 @@ class LoginWithEmailController extends GetxController {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        navigator.showSnackBar(
-            snackbarInstance.customSnackBar(content: 'Senha muito fraca.'));
+        Get.snackbar('Erro!', 'Senha muito fraca');
+
         log('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        navigator.showSnackBar(snackbarInstance.customSnackBar(
-            content: 'Este Email já está sendo utilizado.'));
+        Get.snackbar('Erro!', 'Esse email já está sendo utilizado');
         log('The account already exists for that email.');
+      } else if (e.code == 'user-not-found') {
+        Get.snackbar('Erro!', 'Usuário não cadastrado');
+        log('User not found, maybe have been deleted.');
       }
+    } catch (e) {
+      Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
+      log('ERROR FIREBASE', error: e);
+      throw Exception('Erro ao acessar credencial de usuário');
+    }
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+
+    user = Rx<User?>(instance.currentUser);
+    user.bindStream(instance.userChanges());
+
+    ever(user, _authenticationUser);
+  }
+
+  _authenticationUser(User? user) {
+    if (user == null) {
+      Get.offAll(() => const LoginScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
     }
   }
 
   signOut({required BuildContext context}) async {
-    final navigator = ScaffoldMessenger.of(context);
     try {
       await instance.signOut();
     } catch (e) {
-      navigator.showSnackBar(
-        snackbarInstance.customSnackBar(
-            content: 'Erro ao sair. Tente novamente.'),
-      );
-      log('Não foi possível sair, tente novamente');
+      Get.snackbar('Erro!', 'Erro ao sair, tente novamente.');
+      log('Não foi possível sair, tente novamente', error: e);
+      throw Exception('Erro ao acessar credencial de usuário');
     }
   }
 
   swicthMode() {
     isRegister.value = !isRegister.value;
-    update();
   }
 }
