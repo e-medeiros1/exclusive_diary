@@ -1,4 +1,4 @@
-import 'package:exclusive_diary/app/services/auth_check.dart';
+import 'package:exclusive_diary/app/pages/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,7 @@ class ExclusiveDiary extends StatelessWidget {
       title: 'Exclusive Notes',
       theme: customTheme(),
       debugShowCheckedModeBanner: false,
-      home: const AuthCheck(),
+      home: const LoginScreen(),
     );
   }
 }

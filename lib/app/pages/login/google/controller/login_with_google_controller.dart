@@ -1,6 +1,8 @@
 import 'dart:developer';
 
-import 'package:exclusive_diary/app/core/components/custom_snackbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:exclusive_diary/app/pages/home/home_screen.dart';
+import 'package:exclusive_diary/app/pages/login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -8,20 +10,18 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginWithGoogleController {
-  final CustomSnackbar snackbarInstance = Get.put(CustomSnackbar());
-  Future<User?> signInWithGoogle({required BuildContext context}) async {
-    final navigator = ScaffoldMessenger.of(context);
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  GoogleSignIn googleSign = GoogleSignIn();
+  late Rx<GoogleSignInAccount?> googleSignInAccount;
+  late Rx<User?> user;
 
+  signInWithGoogle({required BuildContext context}) async {
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
 
       try {
-        final UserCredential userCredential =
-            await auth.signInWithPopup(authProvider);
-
-        user = userCredential.user;
+        await auth.signInWithPopup(authProvider);
       } catch (e) {
         log('Erro ao acessar credencial de usuário', error: e);
         throw Exception('Erro ao acessar credencial de usuário');
@@ -42,51 +42,63 @@ class LoginWithGoogleController {
         );
 
         try {
-          final UserCredential userCredential =
-              await auth.signInWithCredential(credential);
-          user = userCredential.user;
+          await auth.signInWithCredential(credential);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
-            navigator.showSnackBar(
-              snackbarInstance.customSnackBar(
-                content: 'Conta já registrada',
-              ),
-            );
+            Get.snackbar('Erro!', 'Conta já registrada.');
           } else if (e.code == 'invalid-credential') {
-            navigator.showSnackBar(
-              snackbarInstance.customSnackBar(
-                content: 'Login inválido. Tente novamente.',
-              ),
-            );
+            Get.snackbar('Erro!', 'Login inválido. Tente novamente.');
           }
         } catch (e) {
-          navigator.showSnackBar(
-            snackbarInstance.customSnackBar(
-              content: 'Erro ao acessar a conta. Tente novamente.',
-            ),
-          );
+          Get.snackbar('Erro!', 'Erro ao acessar a conta, tente novamente.');
           log('ERROR FIREBASE', error: e);
           throw Exception('Erro ao acessar credencial de usuário');
         }
       }
     }
-    return user;
   }
 
-  Future<void> signOut({required BuildContext context}) async {
+
+  void onReady() {
+
     final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    user = Rx<User?>(auth.currentUser);
+    googleSignInAccount = Rx<GoogleSignInAccount?>(googleSignIn.currentUser);
+
+    user.bindStream(auth.userChanges());
+    ever(user, _setInitialScreen);
+
+    googleSignInAccount.bindStream(googleSign.onCurrentUserChanged);
+    ever(googleSignInAccount, _setInitialScreenGoogle);
+  }
+
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => const LoginScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
+    }
+  }
+
+  _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
+    if (googleSignInAccount == null) {
+      Get.offAll(() => const LoginScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
+    }
+  }
+
+  signOut({required BuildContext context}) async {
+    GoogleSignIn googleSign = GoogleSignIn();
 
     try {
       if (!kIsWeb) {
-        await googleSignIn.signOut();
+        await googleSign.signOut();
       }
       await FirebaseAuth.instance.signOut();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackbarInstance.customSnackBar(
-          content: 'Erro ao sair. Tente novamente.',
-        ),
-      );
+      Get.snackbar('Erro!', 'Erro ao sair. Tente novamente.');
       log('ERROR FIREBASE', error: e);
       throw Exception('Erro ao acessar credencial de usuário');
     }
