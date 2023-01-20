@@ -10,7 +10,6 @@ import '../../login_screen.dart';
 class LoginWithEmailController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
   late final Rx<User?> user;
-  var isRegister = false.obs;
 
   Future<void> loginWithEmailAndPassword({
     required String emailAddress,

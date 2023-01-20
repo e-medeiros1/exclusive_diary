@@ -25,11 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * .5,
+              height: MediaQuery.of(context).size.height * .45,
               width: MediaQuery.of(context).size.width,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .5,
+              height: MediaQuery.of(context).size.height * .55,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
