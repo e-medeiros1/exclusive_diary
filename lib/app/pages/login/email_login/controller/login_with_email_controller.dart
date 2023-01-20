@@ -91,8 +91,4 @@ class LoginWithEmailController extends GetxController {
       throw Exception('Erro ao acessar credencial de usuário');
     }
   }
-
-  swicthMode() {
-    isRegister.value = !isRegister.value;
-  }
 }
