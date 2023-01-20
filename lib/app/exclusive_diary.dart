@@ -11,7 +11,9 @@ class ExclusiveDiary extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Exclusive Notes',
-      theme: customTheme(),
+      theme: customTheme().copyWith(
+        scaffoldBackgroundColor: const Color(0xFFF0EBE5),
+      ),
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
     );

@@ -35,12 +35,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         controller: widget.textEditingController,
         keyboardType: TextInputType.emailAddress,
-        cursorColor: Colors.black54,
+        cursorColor: const Color(0xFF87575C),
         obscureText: widget.obscureText,
         decoration: InputDecoration(
           hintText: widget.hintText,
+          hintStyle: const TextStyle(color: Color(0xFF87575C)),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black87, width: 1),
+            borderSide: const BorderSide(color: Color(0xFF87575C), width: 1),
             borderRadius: BorderRadius.circular(25.0),
           ),
           focusedErrorBorder: OutlineInputBorder(
@@ -55,7 +56,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(25.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black87, width: 1.2),
+            borderSide: const BorderSide(color: Color(0xFF87575C), width: 1.2),
             borderRadius: BorderRadius.circular(25.0),
           ),
         ),

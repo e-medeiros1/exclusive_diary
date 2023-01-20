@@ -16,13 +16,16 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Exclusive Diary'),
           centerTitle: true,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                googleInstance.signOut(context: context);
+                emailInstance.signOut(context: context);
+              },
+              child: const Icon(Icons.logout_outlined),
+            ),
+          ],
         ),
-        body: Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  googleInstance.signOut(context: context);
-                  emailInstance.signOut(context: context);
-                },
-                child: const Text('Sair'))));
+        body: Container());
   }
 }

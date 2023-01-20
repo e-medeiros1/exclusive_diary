@@ -66,7 +66,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomElevatedButton(
-                icon: Icons.login,
+                image: const Icon(Icons.login, color: Color(0xFF87575C)),
                 text: 'Entrar',
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {

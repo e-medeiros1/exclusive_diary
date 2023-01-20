@@ -35,11 +35,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * .4,
+                height: MediaQuery.of(context).size.height * .5,
                 width: MediaQuery.of(context).size.width,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * .6,
+                height: MediaQuery.of(context).size.height * .5,
+                width: MediaQuery.of(context).size.width * .95,
                 child: Column(
                   children: [
                     CustomTextField.email(
@@ -84,7 +85,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: CustomElevatedButton(
-                          icon: Icons.login,
+                          image:
+                              const Icon(Icons.login, color: Color(0xFF87575C)),
                           text: 'Criar conta',
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
@@ -104,12 +106,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             const Text(
                               'Já possui uma conta?',
-                              style: TextStyle(fontSize: 16, letterSpacing: -1),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  letterSpacing: -1,
+                                  color: Color(0xFF87575C)),
                             ),
                             TextButton(
                                 style: ButtonStyle(
                                     overlayColor: MaterialStateProperty.all(
-                                        Colors.black12)),
+                                        const Color(0xFF87575C))),
                                 onPressed: () =>
                                     Get.to(() => const LoginScreen()),
                                 child: const Text(
@@ -119,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     letterSpacing: -.9,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
-                                    color: Colors.black87,
+                                    color: Color(0xFF87575C),
                                   ),
                                 )),
                           ]),

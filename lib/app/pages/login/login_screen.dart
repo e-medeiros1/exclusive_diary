@@ -2,6 +2,7 @@ import 'package:exclusive_diary/app/core/components/line_separator.dart';
 import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
 import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'google/controller/login_with_google_controller.dart';
@@ -17,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    String assetName = 'assets/images/google-logo.svg';
+    final Widget svg = SvgPicture.asset(assetName, semanticsLabel: 'Acme Logo');
     final loginWithGoogleInstance = Get.put(LoginWithGoogleController());
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -25,11 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * .45,
+              height: MediaQuery.of(context).size.height * .5,
               width: MediaQuery.of(context).size.width,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .55,
+              height: MediaQuery.of(context).size.height * .5,
+              width: MediaQuery.of(context).size.width * .95,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -40,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: CustomElevatedButton(
                       onPressed: () => loginWithGoogleInstance.signInWithGoogle(
                           context: context),
-                      icon: Icons.facebook_outlined,
+                      image: svg,
                       text: 'Entre com Google',
                     ),
                   ),
@@ -52,12 +56,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           const Text(
                             'Ainda não possui uma conta?',
-                            style: TextStyle(fontSize: 16, letterSpacing: -1),
+                            style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: -1,
+                              color: Color(0xFF87575C),
+                            ),
                           ),
                           TextButton(
                               style: ButtonStyle(
                                   overlayColor: MaterialStateProperty.all(
-                                      Colors.black12)),
+                                      const Color(0xFF87575C))),
                               onPressed: () {
                                 Get.to(() => const RegisterScreen());
                               },
@@ -68,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   letterSpacing: -.9,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
-                                  color: Colors.black87,
+                                  color: Color(0xFF87575C),
                                 ),
                               )),
                         ]),

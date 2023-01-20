@@ -12,18 +12,18 @@ class LineSeparator extends StatelessWidget {
         children: [
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * .42,
+            width: MediaQuery.of(context).size.width * .38,
             color: Colors.grey[500],
           ),
           const SizedBox(height: 2),
           Text(
             '  ou  ',
             style: TextStyle(
-                color: Colors.grey[600], letterSpacing: -.5, fontSize: 16),
+                color: Colors.grey[500], letterSpacing: -.5, fontSize: 16),
           ),
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * .42,
+            width: MediaQuery.of(context).size.width * .38,
             color: Colors.grey[500],
           ),
         ],
