@@ -1,4 +1,3 @@
-import 'package:exclusive_diary/app/pages/login/email_login/controller/login_with_email_controller.dart';
 import 'package:exclusive_diary/app/pages/login/email_login/email_login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,16 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final loginWithGoogleInstance = Get.put(LoginWithGoogleController());
@@ -41,8 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomElevatedButton(
-                onPressed: () => loginWithGoogleInstance.signInWithGoogle(
-                    context: context),
+                onPressed: () =>
+                    loginWithGoogleInstance.signInWithGoogle(context: context),
                 icon: Icons.facebook_outlined,
                 text: 'Entre com Google',
               ),
