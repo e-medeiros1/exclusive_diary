@@ -34,7 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .5,
+                width: MediaQuery.of(context).size.width,
+              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: CustomTextField.email(

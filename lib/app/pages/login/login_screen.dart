@@ -1,3 +1,4 @@
+import 'package:exclusive_diary/app/core/components/line_separator.dart';
 import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
 import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const EmailLoginScreen(),
-                  const SizedBox(height: 10),
+                  const LineSeparator(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: CustomElevatedButton(
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   overlayColor: MaterialStateProperty.all(
                                       Colors.black12)),
                               onPressed: () {
-                                Get.to(()=>const RegisterScreen());
+                                Get.to(() => const RegisterScreen());
                               },
                               child: const Text(
                                 'Cadastre-se!',
