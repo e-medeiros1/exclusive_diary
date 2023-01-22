@@ -11,11 +11,8 @@ class LoginWithEmailController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
   late final Rx<User?> user;
 
-  Future<void> loginWithEmailAndPassword({
-    required String emailAddress,
-    required String password,
-    required BuildContext context,
-  }) async {
+  Future<void> loginWithEmailAndPassword(
+      {required String emailAddress, required String password}) async {
     try {
       instance.signInWithEmailAndPassword(
           email: emailAddress, password: password);
@@ -37,7 +34,6 @@ class LoginWithEmailController extends GetxController {
     required String username,
     required String emailAddress,
     required String password,
-    required BuildContext context,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(

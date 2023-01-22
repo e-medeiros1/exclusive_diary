@@ -12,7 +12,7 @@ class LineSeparator extends StatelessWidget {
         children: [
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * .38,
+            width: MediaQuery.of(context).size.width * .35,
             color: Colors.grey[500],
           ),
           const SizedBox(height: 2),
@@ -23,7 +23,7 @@ class LineSeparator extends StatelessWidget {
           ),
           Container(
             height: 1,
-            width: MediaQuery.of(context).size.width * .38,
+            width: MediaQuery.of(context).size.width * .35,
             color: Colors.grey[500],
           ),
         ],

@@ -16,7 +16,7 @@ class LoginWithGoogleController {
   late Rx<GoogleSignInAccount?> googleSignInAccount;
   late Rx<User?> user;
 
-  signInWithGoogle({required BuildContext context}) async {
+  signInWithGoogle() async {
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
 

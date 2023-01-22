@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -18,7 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
           const EdgeInsets.symmetric(vertical: 4),
         ),
         elevation: MaterialStateProperty.all(0),
-        backgroundColor: MaterialStateProperty.all(const Color(0xFFD1DFBB)),
+        backgroundColor: MaterialStateProperty.all(AppStyle.secondaryColor),
         shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       ),
@@ -33,8 +34,7 @@ class CustomElevatedButton extends StatelessWidget {
           const SizedBox(width: 16),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(text,
-                style: const TextStyle(color: Color(0xFF87575C), fontSize: 18)),
+            child: Text(text, style: AppStyle.regularText),
           ),
         ],
       ),
