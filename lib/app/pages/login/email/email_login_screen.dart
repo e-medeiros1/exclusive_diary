@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Rx<bool> pwdVisibility = false.obs;
     final loginWithEmailInstance = Get.put(LoginWithEmailController());
     final _formkey = GlobalKey<FormState>();
 
@@ -51,30 +53,49 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
             },
           ),
           const SizedBox(height: 10),
-          CustomTextField.password(
-            textEditingController: passwordController,
-            hintText: 'Senha',
-            validator: (_password) {
-              final password = _password ?? '';
-              if (password.isEmpty || password.length < 6) {
-                return 'Informe uma senha válida.';
-              }
-              return null;
-            },
+          Obx(
+            () => CustomTextField.password(
+              textEditingController: passwordController,
+              hintText: 'Senha',
+              obscureText: !pwdVisibility.value,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  pwdVisibility.value = !pwdVisibility.value;
+                },
+                child: Icon(
+                  // ignore: unrelated_type_equality_checks
+                  pwdVisibility == true
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: AppStyle.primaryColor,
+                  size: 18,
+                ),
+              ),
+              validator: (_password) {
+                final password = _password ?? '';
+                if (password.isEmpty || password.length < 6) {
+                  return 'Informe uma senha válida.';
+                }
+                return null;
+              },
+            ),
           ),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomElevatedButton(
-                image: const Icon(Icons.login, color: Color(0xFF87575C)),
+                image: const Icon(Icons.login, color: AppStyle.primaryColor),
                 text: 'Entrar',
                 onPressed: () {
+                  const CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppStyle.primaryColor),
+                    backgroundColor: AppStyle.backgroundColor,
+                  );
                   if (_formkey.currentState!.validate()) {
                     loginWithEmailInstance.loginWithEmailAndPassword(
-                      emailAddress: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                      context: context,
-                    );
+                        emailAddress: emailController.text.trim(),
+                        password: passwordController.text.trim());
                   }
                 }),
           ),
