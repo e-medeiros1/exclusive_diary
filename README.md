@@ -21,7 +21,11 @@ Link para o app: Em breve
 
 ### Propósito
 
-- Um diário para fazer anotações sobre o dia, fazendo para uso pessoal mas utilizando conceitos novos para aprendizado  
+- Um diário para fazer anotações sobre o dia, fazendo para uso pessoal mas utilizando conceitos novos para aprendizado
+
+### Telas  
+
+<img src="https://user-images.githubusercontent.com/73318684/213896477-5dd0b098-5d38-46e0-bcb5-f2e081c94785.png" width="250" alt="Logo Diary"/>
 
 
    
