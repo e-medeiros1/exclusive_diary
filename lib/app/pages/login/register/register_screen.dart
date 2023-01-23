@@ -39,6 +39,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .48,
                     width: MediaQuery.of(context).size.width,
+                    child: Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/exclusive-diary-icon.png',
+                          height: MediaQuery.of(context).size.height * .2,
+                        ),
+                        const SizedBox(height: 10),
+                        Text('Exclusive Diary',
+                            style: AppStyle.mainText.copyWith(
+                              fontSize: 55,
+                              fontFamily: 'DancingScript-Regular',
+                            ))
+                      ],
+                    )),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .52,
