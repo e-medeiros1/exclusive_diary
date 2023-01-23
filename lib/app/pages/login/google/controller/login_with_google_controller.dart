@@ -2,12 +2,13 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exclusive_diary/app/pages/home/home_screen.dart';
-import 'package:exclusive_diary/app/pages/login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../../carousel/carousel_screen.dart';
 
 class LoginWithGoogleController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -58,9 +59,7 @@ class LoginWithGoogleController {
     }
   }
 
-
   void onReady() {
-
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     user = Rx<User?>(auth.currentUser);
@@ -75,7 +74,7 @@ class LoginWithGoogleController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const CarouselScreen());
     } else {
       Get.offAll(() => const HomeScreen());
     }
@@ -83,7 +82,7 @@ class LoginWithGoogleController {
 
   _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
     if (googleSignInAccount == null) {
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const CarouselScreen());
     } else {
       Get.offAll(() => const HomeScreen());
     }

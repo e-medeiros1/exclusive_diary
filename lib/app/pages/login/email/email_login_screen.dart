@@ -65,8 +65,8 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 child: Icon(
                   // ignore: unrelated_type_equality_checks
                   pwdVisibility == true
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
                   color: AppStyle.primaryColor,
                   size: 18,
                 ),

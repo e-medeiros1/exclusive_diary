@@ -1,4 +1,5 @@
 import 'package:exclusive_diary/app/core/components/line_separator.dart';
+import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
 import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,69 +25,74 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+          backgroundColor: AppStyle.backgroundColor,
           body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .5,
-              width: MediaQuery.of(context).size.width,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .5,
-              width: MediaQuery.of(context).size.width * .95,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const EmailLoginScreen(),
-                  const LineSeparator(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: CustomElevatedButton(
-                      onPressed: () => loginWithGoogleInstance.signInWithGoogle(
-                          context: context),
-                      image: svg,
-                      text: 'Entre com Google',
-                    ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .48,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/exclusive-diary-icon.png',
+                        height: MediaQuery.of(context).size.height * .2,
+                      ),
+                      const SizedBox(height: 10),
+                      Text('Exclusive Diary',
+                          style: AppStyle.mainText.copyWith(
+                            fontSize: 55,
+                            fontFamily: 'DancingScript-Regular',
+                          ))
+                    ],
+                  )),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .52,
+                  width: MediaQuery.of(context).size.width * .95,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const EmailLoginScreen(),
+                      const LineSeparator(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: CustomElevatedButton(
+                          onPressed: () =>
+                              loginWithGoogleInstance.signInWithGoogle(),
+                          image: svg,
+                          text: 'Entre com Google',
+                        ),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Ainda não possui uma conta?',
+                                  style: AppStyle.regularText),
+                              TextButton(
+                                style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty.all(
+                                        AppStyle.primaryColor)),
+                                onPressed: () {
+                                  Get.to(() => const RegisterScreen());
+                                },
+                                child: Text('Cadastre-se!',
+                                    style: AppStyle.mainText.copyWith(
+                                        decoration: TextDecoration.underline)),
+                              ),
+                            ]),
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Ainda não possui uma conta?',
-                            style: TextStyle(
-                              fontSize: 16,
-                              letterSpacing: -1,
-                              color: Color(0xFF87575C),
-                            ),
-                          ),
-                          TextButton(
-                              style: ButtonStyle(
-                                  overlayColor: MaterialStateProperty.all(
-                                      const Color(0xFF87575C))),
-                              onPressed: () {
-                                Get.to(() => const RegisterScreen());
-                              },
-                              child: const Text(
-                                'Cadastre-se!',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  letterSpacing: -.9,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xFF87575C),
-                                ),
-                              )),
-                        ]),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      )),
+          )),
     );
   }
 }
