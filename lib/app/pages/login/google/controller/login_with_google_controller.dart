@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../carousel/carousel_screen.dart';
 
-class LoginWithGoogleController {
+class LoginWithGoogleController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   GoogleSignIn googleSign = GoogleSignIn();
@@ -25,7 +25,7 @@ class LoginWithGoogleController {
         await auth.signInWithPopup(authProvider);
       } catch (e) {
         log('Erro ao acessar credencial de usuário', error: e);
-        throw Exception('Erro ao acessar credencial de usuário');
+        throw Get.snackbar('Erro!', 'Erro ao acessar credencial de usuário');
       }
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -46,20 +46,23 @@ class LoginWithGoogleController {
           await auth.signInWithCredential(credential);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
-            Get.snackbar('Erro!', 'Conta já registrada.');
+            throw Get.snackbar('Erro!', 'Conta já registrada.');
           } else if (e.code == 'invalid-credential') {
-            Get.snackbar('Erro!', 'Login inválido. Tente novamente.');
+            throw Get.snackbar('Erro!', 'Login inválido. Tente novamente.');
           }
         } catch (e) {
-          Get.snackbar('Erro!', 'Erro ao acessar a conta, tente novamente.');
           log('ERROR FIREBASE', error: e);
-          throw Exception('Erro ao acessar credencial de usuário');
+          throw Get.snackbar(
+              'Erro!', 'Erro ao acessar a conta, tente novamente.');
         }
       }
     }
+     update();
   }
 
+  @override
   void onReady() {
+    super.onReady();
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     user = Rx<User?>(auth.currentUser);
@@ -97,9 +100,9 @@ class LoginWithGoogleController {
       }
       await FirebaseAuth.instance.signOut();
     } catch (e) {
-      Get.snackbar('Erro!', 'Erro ao sair. Tente novamente.');
       log('ERROR FIREBASE', error: e);
-      throw Exception('Erro ao acessar credencial de usuário');
+      throw Get.snackbar('Erro!', 'Erro ao sair. Tente novamente.');
     }
+    update();
   }
 }

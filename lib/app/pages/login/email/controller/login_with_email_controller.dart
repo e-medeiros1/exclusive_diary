@@ -18,16 +18,17 @@ class LoginWithEmailController extends GetxController {
           email: emailAddress, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Get.snackbar('Erro', 'Usuário não cadastrado');
         log('No user found for that email.');
+        Get.snackbar('Erro', 'Usuário não cadastrado');
       } else if (e.code == 'wrong-password') {
-        Get.snackbar('Erro!', 'Senha incorreta');
         log('Wrong password provided for that user.');
+        throw Get.snackbar('Erro!', 'Senha incorreta');
       }
     } catch (e) {
-      Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
       log('ERROR FIREBASE', error: e);
+      throw Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
     }
+    update();
   }
 
   Future<void> createAccount({
@@ -42,21 +43,20 @@ class LoginWithEmailController extends GetxController {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        Get.snackbar('Erro!', 'Senha muito fraca');
-
         log('The password provided is too weak.');
+        throw Get.snackbar('Erro!', 'Senha muito fraca');
       } else if (e.code == 'email-already-in-use') {
-        Get.snackbar('Erro!', 'Esse email já está sendo utilizado');
         log('The account already exists for that email.');
+        throw Get.snackbar('Erro!', 'Esse email já está sendo utilizado');
       } else if (e.code == 'user-not-found') {
-        Get.snackbar('Erro!', 'Usuário não cadastrado');
         log('User not found, maybe have been deleted.');
+        throw Get.snackbar('Erro!', 'Usuário não cadastrado');
       }
     } catch (e) {
-      Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
       log('ERROR FIREBASE', error: e);
-      throw Exception('Erro ao acessar credencial de usuário');
+      throw Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
     }
+    update();
   }
 
   @override
@@ -81,9 +81,10 @@ class LoginWithEmailController extends GetxController {
     try {
       await instance.signOut();
     } catch (e) {
-      Get.snackbar('Erro!', 'Erro ao sair, tente novamente.');
       log('Não foi possível sair, tente novamente', error: e);
-      throw Exception('Erro ao acessar credencial de usuário');
+
+      throw Get.snackbar('Erro!', 'Erro ao sair, tente novamente.');
     }
+    update();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:exclusive_diary/app/core/theme/app_style.dart';
+import 'package:exclusive_diary/app/pages/carousel/controller/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../login/google/widgets/custom_elevatedbutton.dart';
-import '../login/login_screen.dart';
+import 'widgets/carousel_bottom.dart';
 
 class CarouselScreen extends StatefulWidget {
   const CarouselScreen({super.key});
@@ -13,58 +13,19 @@ class CarouselScreen extends StatefulWidget {
 }
 
 class _CarouselScreenState extends State<CarouselScreen> {
-  int _currentPage = 0;
   late final PageController _pageController = PageController();
-
-  var carouselTexts = [
-    {'id': 0, 'text': "O lugar ideal para anotar a melhor parte do seu dia."},
-    {'id': 1, 'text': "Nunca esqueça daquele momento especial."},
-    {'id': 2, 'text': "Bem vindo ao seu diário."}
-  ];
+  final CarouselController controller = Get.put(CarouselController());
 
   @override
   void initState() {
     super.initState();
     _pageController.addListener(() {
-      int next = _pageController.page!.round();
+      var next = _pageController.page!.round();
 
-      if (_currentPage != next) {
-        _currentPage = next;
+      if (controller.currentPage.value != next) {
+        controller.currentPage.value = next;
       }
     });
-  }
-
-  slider({texts, margin, active}) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-      margin: EdgeInsets.all(margin),
-      child: Center(
-        child: Text(
-          texts.toString(),
-          softWrap: true,
-          style: AppStyle.mainText.copyWith(fontSize: 45),
-        ),
-      ),
-    );
-  }
-
-  indicators() {
-    return carouselTexts.map(
-      (i) {
-        return Container(
-          margin: const EdgeInsets.all(3),
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: _currentPage == i['id']
-                ? AppStyle.primaryColor
-                : AppStyle.secondaryColor,
-            shape: BoxShape.circle,
-          ),
-        );
-      },
-    ).toList();
   }
 
   @override
@@ -90,47 +51,26 @@ class _CarouselScreenState extends State<CarouselScreen> {
             height: MediaQuery.of(context).size.height * .75,
             width: MediaQuery.of(context).size.width,
             child: PageView.builder(
-              itemCount: carouselTexts.length,
+              itemCount: controller.carouselTexts.length,
               pageSnapping: true,
               controller: _pageController,
               onPageChanged: (page) {
                 setState(() {
-                  _currentPage = page;
+                  controller.currentPage.value = page;
                 });
               },
               itemBuilder: (_, pagePosition) {
-                bool active = pagePosition == _currentPage;
+                bool active = pagePosition == controller.currentPage.value;
                 double margin = active ? 10 : 20;
-                return slider(
+                return controller.slider(
                     active: active,
                     margin: margin,
-                    texts: carouselTexts[pagePosition]['text']);
+                    texts: controller.carouselTexts[pagePosition]['text']);
               },
             ),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .15,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (_currentPage != 2)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: indicators(),
-                  ),
-                if (_currentPage == 2)
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * .1),
-                    child: CustomElevatedButton(
-                        onPressed: () => Get.off(() => const LoginScreen()),
-                        text: 'Avançar'),
-                  ),
-              ],
-            ),
-          ),
+          CarouselBottom(currentPage: controller.currentPage.value,)
         ],
       ),
     );
