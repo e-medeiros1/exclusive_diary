@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exclusive_diary/app/pages/home/diary_screen.dart/diary_screen.dart';
@@ -17,9 +17,9 @@ class DiaryEditScreen extends StatefulWidget {
 class _DiaryEditScreenState extends State<DiaryEditScreen> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    int colorId = Random().nextInt(AppStyle.notesColor.length);
     DateTime now = DateTime.now().toLocal();
     String convertedDateTime =
         "${now.day.toString()}-${now.month.toString().padLeft(2, '0')}-${now.year.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
@@ -27,12 +27,12 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: AppStyle.notesColor[colorId],
+        backgroundColor: AppStyle.backgroundColor,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: AppStyle.primaryColor),
           elevation: 0,
           centerTitle: true,
-          backgroundColor: AppStyle.notesColor[colorId],
+          backgroundColor: AppStyle.backgroundColor,
           title: Text(
             'Escreva sua história',
             style: AppStyle.mainText
@@ -74,12 +74,21 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppStyle.secondaryColor,
           onPressed: () async {
-            FirebaseFirestore.instance.collection('Diary').add({
-              'diary_title': titleController.text,
-              'creation_date': convertedDateTime,
-              'diary_content': contentController.text,
-              'color_id': colorId
-            }).then((value) => Get.off(() => const DiaryScreen()));
+            FirebaseFirestore.instance
+                .collection('Diary')
+                .add({
+                  'diary_title': titleController.text,
+                  'creation_date': convertedDateTime,
+                  'diary_content': contentController.text,
+                })
+                .then((value) => Get.off(() => const DiaryScreen()))
+                .catchError(
+                  (error) {
+                    log('Não foi possível salvar sua anotação!', error: error);
+                    throw Get.snackbar(
+                        'Erro!', 'Não foi possível salvar suas anotações.');
+                  },
+                );
           },
           child: const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
         ),
