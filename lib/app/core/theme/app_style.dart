@@ -6,21 +6,23 @@ class AppStyle {
   static const secondaryColor = Color(0xFFD1DFBB);
 
   static List<Color> notesColor = [
-    Colors.red.shade100,
-    Colors.blue.shade100,
-    Colors.green.shade100,
-    Colors.pink.shade100,
-    Colors.yellow.shade100,
-    Colors.blueGrey.shade100,
-    Colors.orange.shade100,
+    const Color(0xFFfabfb7),
+    const Color(0xFFfdf9c4),
+    const Color(0xFFffda9e),
+    const Color(0xFFb2e2f2),
+    const Color(0xFFcce5ff),
+    const Color(0xFFeaffc2),
+    const Color(0xFFb8e4ff),
+    const Color(0xFFffe180),
+    const Color(0xFFfdcae1),
   ];
 
   static AppBarTheme themeAppBar = AppBarTheme(
-    elevation: 0,
-    backgroundColor: backgroundColor,
-    iconTheme: const IconThemeData(color: primaryColor),
-    titleTextStyle: mainText.copyWith(fontSize: 20),
-  );
+      elevation: 0,
+      backgroundColor: backgroundColor,
+      iconTheme: const IconThemeData(color: primaryColor),
+      titleTextStyle: mainText.copyWith(fontSize: 20),
+      centerTitle: true);
 
   static TextStyle regularText = const TextStyle(
     color: primaryColor,

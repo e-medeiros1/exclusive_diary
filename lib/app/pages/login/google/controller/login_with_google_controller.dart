@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:exclusive_diary/app/pages/home/home_screen.dart';
+import 'package:exclusive_diary/app/pages/home/diary_screen.dart/diary_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class LoginWithGoogleController extends GetxController {
         }
       }
     }
-     update();
+    update();
   }
 
   @override
@@ -79,7 +79,7 @@ class LoginWithGoogleController extends GetxController {
     if (user == null) {
       Get.offAll(() => const CarouselScreen());
     } else {
-      Get.offAll(() => const HomeScreen());
+      Get.offAll(() => const DiaryScreen());
     }
   }
 
@@ -87,7 +87,7 @@ class LoginWithGoogleController extends GetxController {
     if (googleSignInAccount == null) {
       Get.offAll(() => const CarouselScreen());
     } else {
-      Get.offAll(() => const HomeScreen());
+      Get.offAll(() => const DiaryScreen());
     }
   }
 
