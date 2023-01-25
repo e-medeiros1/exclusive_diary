@@ -22,6 +22,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
         Get.find<LoginWithGoogleController>();
     final LoginWithEmailController emailInstance =
         Get.find<LoginWithEmailController>();
+
     return Scaffold(
         backgroundColor: AppStyle.backgroundColor,
         appBar: AppBar(
@@ -45,16 +46,11 @@ class _DiaryScreenState extends State<DiaryScreen> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Meu diário',
-                style: AppStyle.mainText.copyWith(fontSize: 20),
-              ),
-              const SizedBox(height: 20),
               StreamBuilder<QuerySnapshot>(
                 stream:
                     FirebaseFirestore.instance.collection('Diary').snapshots(),

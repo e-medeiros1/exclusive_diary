@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class DiaryDetailScreen extends StatefulWidget {
   QueryDocumentSnapshot doc;
 
@@ -18,14 +19,13 @@ class DiaryDetailScreen extends StatefulWidget {
 class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final colorId = widget.doc['color_id'];
     return Scaffold(
-      backgroundColor: AppStyle.notesColor[colorId],
+      backgroundColor: AppStyle.backgroundColor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: AppStyle.primaryColor),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppStyle.notesColor[colorId],
+        backgroundColor: AppStyle.backgroundColor,
         title: Text(
           widget.doc['diary_title'],
           style: AppStyle.mainText

@@ -10,19 +10,36 @@ Widget diaryCard({Function()? onTap, QueryDocumentSnapshot? doc}) {
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppStyle.notesColor[doc?['color_id']],
+        color: AppStyle.backgroundColor,
         borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(child: Text(doc?['diary_title'], style: AppStyle.mainText)),
-          const SizedBox(height: 8),
-          Text(doc?['creation_date'], style: AppStyle.regularText),
-          const SizedBox(height: 4),
-          Text(doc?['diary_content'], style: AppStyle.regularText),
+        border: Border.all(color: AppStyle.primaryColor),
+        boxShadow: const [
+          BoxShadow(
+              color: AppStyle.primaryColor,
+              blurRadius: 5,
+              spreadRadius: -4,
+              offset: Offset(0, 5))
         ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              doc?['diary_title'],
+              style: AppStyle.mainText,
+              softWrap: true,
+            ),
+            const SizedBox(height: 8),
+            Text(doc?['creation_date'], style: AppStyle.regularText),
+            const SizedBox(height: 4),
+            Text(
+              doc?['diary_content'],
+              style: AppStyle.regularText,
+              softWrap: true,
+            ),
+          ],
+        ),
       ),
     ),
   );
