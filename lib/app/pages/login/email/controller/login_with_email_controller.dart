@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../home/diary_screen.dart/diary_screen.dart';
+import '../../../home/home_screen.dart';
 
 class LoginWithEmailController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
@@ -19,7 +19,7 @@ class LoginWithEmailController extends GetxController {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         log('No user found for that email.');
-        Get.snackbar('Erro', 'Usuário não cadastrado');
+        throw Get.snackbar('Erro', 'Usuário não cadastrado');
       } else if (e.code == 'wrong-password') {
         log('Wrong password provided for that user.');
         throw Get.snackbar('Erro!', 'Senha incorreta');
@@ -42,10 +42,7 @@ class LoginWithEmailController extends GetxController {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        log('The password provided is too weak.');
-        throw Get.snackbar('Erro!', 'Senha muito fraca');
-      } else if (e.code == 'email-already-in-use') {
+      if (e.code == 'email-already-in-use') {
         log('The account already exists for that email.');
         throw Get.snackbar('Erro!', 'Esse email já está sendo utilizado');
       } else if (e.code == 'user-not-found') {
@@ -57,6 +54,11 @@ class LoginWithEmailController extends GetxController {
       throw Get.snackbar('Erro!', 'Erro ao acessar a conta. Tente novamente.');
     }
     update();
+  }
+
+  resetPassword({required String email}) async {
+    await instance.sendPasswordResetEmail(email: email).catchError((e) =>
+        Get.snackbar('Recuperação de senha!', 'Email de recuperação enviado.'));
   }
 
   @override
@@ -73,14 +75,14 @@ class LoginWithEmailController extends GetxController {
     if (user == null) {
       Get.offAll(() => const CarouselScreen());
     } else {
-      Get.offAll(() => const DiaryScreen());
+      Get.offAll(() => const HomeScreen());
     }
   }
 
   signOut({required BuildContext context}) async {
     try {
       await instance.signOut();
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       log('Não foi possível sair, tente novamente', error: e);
 
       throw Get.snackbar('Erro!', 'Erro ao sair, tente novamente.');
