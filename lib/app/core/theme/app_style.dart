@@ -5,18 +5,6 @@ class AppStyle {
   static const primaryColor = Color(0xFF87575C);
   static const secondaryColor = Color(0xFFD1DFBB);
 
-  static List<Color> notesColor = [
-    const Color(0xFFfabfb7),
-    const Color(0xFFfdf9c4),
-    const Color(0xFFffda9e),
-    const Color(0xFFb2e2f2),
-    const Color(0xFFcce5ff),
-    const Color(0xFFeaffc2),
-    const Color(0xFFb8e4ff),
-    const Color(0xFFffe180),
-    const Color(0xFFfdcae1),
-  ];
-
   static AppBarTheme themeAppBar = AppBarTheme(
       elevation: 0,
       backgroundColor: backgroundColor,
