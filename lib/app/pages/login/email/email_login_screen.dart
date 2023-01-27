@@ -63,13 +63,12 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   pwdVisibility.value = !pwdVisibility.value;
                 },
                 child: Icon(
-                  // ignore: unrelated_type_equality_checks
-                  pwdVisibility == true
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: AppStyle.primaryColor,
-                  size: 18,
-                ),
+                    // ignore: unrelated_type_equality_checks
+                    pwdVisibility == true
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppStyle.primaryColor,
+                    size: 18),
               ),
               validator: (_password) {
                 final password = _password ?? '';
