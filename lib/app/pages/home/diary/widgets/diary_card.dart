@@ -3,9 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:flutter/material.dart';
 
-Widget diaryCard({Function()? onTap, QueryDocumentSnapshot? doc}) {
+Widget diaryCard({Function()? onTap, Function()? onLongPress, QueryDocumentSnapshot? doc}) {
   return GestureDetector(
     onTap: onTap,
+    onLongPress: onLongPress,
     child: Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),

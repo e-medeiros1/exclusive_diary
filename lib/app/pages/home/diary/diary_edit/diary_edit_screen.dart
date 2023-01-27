@@ -1,11 +1,8 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:exclusive_diary/app/pages/home/diary_screen.dart/diary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../core/theme/app_style.dart';
+import '../../../../core/theme/app_style.dart';
+import '../controller/diary_controller.dart';
 
 class DiaryEditScreen extends StatefulWidget {
   const DiaryEditScreen({super.key});
@@ -15,6 +12,7 @@ class DiaryEditScreen extends StatefulWidget {
 }
 
 class _DiaryEditScreenState extends State<DiaryEditScreen> {
+  final DiaryController diaryInstance = Get.find<DiaryController>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
@@ -73,22 +71,11 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppStyle.secondaryColor,
-          onPressed: () async {
-            FirebaseFirestore.instance
-                .collection('Diary')
-                .add({
-                  'diary_title': titleController.text,
-                  'creation_date': convertedDateTime,
-                  'diary_content': contentController.text,
-                })
-                .then((value) => Get.off(() => const DiaryScreen()))
-                .catchError(
-                  (error) {
-                    log('Não foi possível salvar sua anotação!', error: error);
-                    throw Get.snackbar(
-                        'Erro!', 'Não foi possível salvar suas anotações.');
-                  },
-                );
+          onPressed: () {
+            diaryInstance.diaryEdit(
+                title: titleController.text,
+                time: convertedDateTime,
+                content: contentController.text);
           },
           child: const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
         ),
