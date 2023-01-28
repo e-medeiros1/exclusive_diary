@@ -168,7 +168,7 @@ class BottomLoginScreen extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor:
                           MaterialStateProperty.all(AppStyle.secondaryColor)),
-                  onPressed: () => Get.toNamed('/register'),
+                  onPressed: () => Get.offNamed('/register'),
                   child: Text('Cadastre-se!',
                       style: AppStyle.mainText
                           .copyWith(decoration: TextDecoration.underline))),

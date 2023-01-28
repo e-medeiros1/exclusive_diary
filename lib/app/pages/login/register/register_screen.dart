@@ -169,7 +169,7 @@ class BottomRegisterScreen extends StatelessWidget {
                   style: ButtonStyle(
                       overlayColor:
                           MaterialStateProperty.all(AppStyle.secondaryColor)),
-                  onPressed: () => Get.toNamed('/login'),
+                  onPressed: () => Get.offNamed('/login'),
                   child: Text(
                     'Faça login!',
                     style: AppStyle.mainText
