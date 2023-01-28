@@ -1,4 +1,4 @@
-import 'package:exclusive_diary/app/pages/carousel/carousel_screen.dart';
+import 'package:exclusive_diary/app/core/routes/names_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,10 +7,10 @@ class ExclusiveDiary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: 'Exclusive Notes',
       debugShowCheckedModeBanner: false,
-      home: CarouselScreen(),
+      getPages: getPages,
     );
   }
 }

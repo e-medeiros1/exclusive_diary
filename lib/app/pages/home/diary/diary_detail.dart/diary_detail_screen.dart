@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class DiaryDetailScreen extends StatefulWidget {
-  QueryDocumentSnapshot doc;
 
   DiaryDetailScreen({
     Key? key,
     required this.doc,
   }) : super(key: key);
+  QueryDocumentSnapshot doc;
 
   @override
   State<DiaryDetailScreen> createState() => _DiaryDetailScreenState();

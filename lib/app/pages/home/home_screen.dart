@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'diary/diary_detail.dart/diary_detail_screen.dart';
-import 'diary/diary_edit/diary_edit_screen.dart';
 import 'diary/widgets/diary_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,9 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     diaryInstance.deleteDiary();
                                   },
                                   onTap: () {
-                                    Get.to(() => DiaryDetailScreen(
-                                          doc: notes,
-                                        ));
+                                    Get.to(
+                                        () => DiaryDetailScreen(
+                                              doc: notes,
+                                            ),
+                                        curve: Curves.easeIn,
+                                        transition: Transition.fadeIn,
+                                        routeName: '/detail');
                                   },
                                   doc: notes))
                               .toList(),
@@ -76,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.add, color: AppStyle.primaryColor),
             backgroundColor: AppStyle.secondaryColor,
             onPressed: () {
-              Get.to(() => const DiaryEditScreen());
+              Get.toNamed('/edit');
             },
             label: Text(
               'Crie uma história',

@@ -1,11 +1,8 @@
 import 'dart:developer';
 
-import 'package:exclusive_diary/app/pages/carousel/carousel_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../home/home_screen.dart';
 
 class LoginWithEmailController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
@@ -74,9 +71,9 @@ class LoginWithEmailController extends GetxController {
 
   _authenticationUser(User? user) {
     if (user == null) {
-      Get.offAll(() => const CarouselScreen());
+      Get.offAllNamed('/');
     } else {
-      Get.offAll(() => const HomeScreen());
+      Get.offAllNamed('/home');
     }
   }
 

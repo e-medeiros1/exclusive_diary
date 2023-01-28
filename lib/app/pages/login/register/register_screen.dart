@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../email/widgets/custom_text_field.dart';
 import '../google/widgets/custom_elevatedbutton.dart';
-import '../login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -177,7 +176,7 @@ class BottomRegisterScreen extends StatelessWidget {
                       style: ButtonStyle(
                           overlayColor: MaterialStateProperty.all(
                               AppStyle.secondaryColor)),
-                      onPressed: () => Get.to(() => const LoginScreen()),
+                      onPressed: () => Get.toNamed('/login'),
                       child: Text(
                         'Faça login!',
                         style: AppStyle.mainText

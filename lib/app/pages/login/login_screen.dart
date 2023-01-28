@@ -3,7 +3,6 @@ import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:exclusive_diary/app/pages/login/email/controller/login_with_email_controller.dart';
 import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
 import 'package:exclusive_diary/app/pages/login/email/widgets/custom_text_field.dart';
-import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -158,7 +157,7 @@ class BottomLoginScreen extends StatelessWidget {
                       style: ButtonStyle(
                           overlayColor: MaterialStateProperty.all(
                               AppStyle.secondaryColor)),
-                      onPressed: () => Get.to(() => const RegisterScreen()),
+                      onPressed: () => Get.toNamed('/register'),
                       child: Text('Cadastre-se!',
                           style: AppStyle.mainText
                               .copyWith(decoration: TextDecoration.underline))),

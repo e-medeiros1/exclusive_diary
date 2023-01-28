@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../login/google/widgets/custom_elevatedbutton.dart';
-import '../../login/login_screen.dart';
 
 // ignore: must_be_immutable
 class CarouselBottom extends StatelessWidget {
@@ -30,7 +29,7 @@ class CarouselBottom extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * .1),
               child: CustomElevatedButton(
-                  onPressed: () => Get.off(() => const LoginScreen()),
+                  onPressed: () => Get.offNamed('/login'),
                   image: const Icon(
                     Icons.navigate_next_outlined,
                     color: AppStyle.primaryColor,

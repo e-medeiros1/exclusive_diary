@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import '../../home_screen.dart';
-
 class DiaryController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>>? snapshots;
   QueryDocumentSnapshot? documentSnapshot;
@@ -23,7 +21,7 @@ class DiaryController extends GetxController {
           'creation_date': time,
           'diary_content': content,
         })
-        .then((value) => Get.off(() => const HomeScreen()))
+        .then((value) => Get.offNamed('/home'))
         .catchError(
           (error) {
             log('Não foi possível salvar sua anotação!', error: error);
