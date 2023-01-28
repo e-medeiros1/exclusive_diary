@@ -29,6 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: AppStyle.backgroundColor,
             body: Form(
               key: _formkey,
@@ -100,7 +101,7 @@ class BottomRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .57,
+      height: MediaQuery.of(context).size.height * .52,
       width: MediaQuery.of(context).size.width * .95,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -165,29 +166,21 @@ class BottomRegisterScreen extends StatelessWidget {
                 }),
           ),
           const Spacer(),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Já possui uma conta?', style: AppStyle.regularText),
-                  TextButton(
-                      style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all(
-                              AppStyle.secondaryColor)),
-                      onPressed: () => Get.toNamed('/login'),
-                      child: Text(
-                        'Faça login!',
-                        style: AppStyle.mainText
-                            .copyWith(decoration: TextDecoration.underline),
-                      )),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .1,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Já possui uma conta?', style: AppStyle.regularText),
+              TextButton(
+                  style: ButtonStyle(
+                      overlayColor:
+                          MaterialStateProperty.all(AppStyle.secondaryColor)),
+                  onPressed: () => Get.toNamed('/login'),
+                  child: Text(
+                    'Faça login!',
+                    style: AppStyle.mainText
+                        .copyWith(decoration: TextDecoration.underline),
+                  )),
+            ],
           ),
         ],
       ),

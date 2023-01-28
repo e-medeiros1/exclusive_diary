@@ -28,21 +28,20 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
-        child: SafeArea(
-          child: Scaffold(
-              backgroundColor: AppStyle.backgroundColor,
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const TopLoginScreen(),
-                    BottomLoginScreen(
-                        loginWithEmailInstance: loginWithEmailInstance,
-                        loginWithGoogleInstance: loginWithGoogleInstance,
-                        svgImage: svgImage),
-                  ],
-                ),
-              )),
-        ),
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: AppStyle.backgroundColor,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const TopLoginScreen(),
+                  BottomLoginScreen(
+                      loginWithEmailInstance: loginWithEmailInstance,
+                      loginWithGoogleInstance: loginWithGoogleInstance,
+                      svgImage: svgImage),
+                ],
+              ),
+            )),
       ),
     );
   }
@@ -94,7 +93,7 @@ class BottomLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController recoveryEmail = TextEditingController();
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .57,
+      height: MediaQuery.of(context).size.height * .52,
       width: MediaQuery.of(context).size.width * .95,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -107,8 +106,8 @@ class BottomLoginScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () => Get.defaultDialog(
                     backgroundColor: AppStyle.backgroundColor,
-                    titleStyle: AppStyle.mainText,
-                    title: 'Recuperação de senha!',
+                    titleStyle: AppStyle.mainText.copyWith(fontSize: 20),
+                    title: 'Recuperação de senha',
                     titlePadding: const EdgeInsets.only(top: 20),
                     contentPadding: const EdgeInsets.all(20),
                     content: CustomTextField.email(
@@ -145,25 +144,20 @@ class BottomLoginScreen extends StatelessWidget {
                   onPressed: () => loginWithGoogleInstance.signInWithGoogle(),
                   image: svgImage,
                   text: 'Entre com Google')),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Ainda não possui uma conta?',
-                      style: AppStyle.regularText),
-                  TextButton(
-                      style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all(
-                              AppStyle.secondaryColor)),
-                      onPressed: () => Get.toNamed('/register'),
-                      child: Text('Cadastre-se!',
-                          style: AppStyle.mainText
-                              .copyWith(decoration: TextDecoration.underline))),
-                ],
-              ),
-            ),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Ainda não possui uma conta?', style: AppStyle.regularText),
+              TextButton(
+                  style: ButtonStyle(
+                      overlayColor:
+                          MaterialStateProperty.all(AppStyle.secondaryColor)),
+                  onPressed: () => Get.toNamed('/register'),
+                  child: Text('Cadastre-se!',
+                      style: AppStyle.mainText
+                          .copyWith(decoration: TextDecoration.underline))),
+            ],
           ),
         ],
       ),

@@ -26,6 +26,7 @@ class CustomAppBar extends GetxController {
       iconTheme: AppStyle.themeAppBar.iconTheme,
       actions: [
         PopupMenuButton(
+          
           onSelected: (value) {
             _onMenuItemSelected(value as int, context);
           },
@@ -38,7 +39,7 @@ class CustomAppBar extends GetxController {
           ),
           itemBuilder: (ctx) => [
             _buildPopupMenuItem(
-                '  Sair', Icons.logout_outlined, Options.exit.index),
+                'Sair', Icons.logout_outlined, Options.exit.index),
           ],
         )
       ],
@@ -57,6 +58,7 @@ class CustomAppBar extends GetxController {
             color: AppStyle.primaryColor,
             size: 21,
           ),
+          const SizedBox(width: 10),
           Text(
             title,
             style: AppStyle.regularText,
