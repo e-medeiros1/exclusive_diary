@@ -33,7 +33,7 @@ class DiaryController extends GetxController {
 
   deleteDiary() {
     instance.collection('Diary').doc('users').delete().then(
-        (doc) => Get.snackbar('Excluído!', 'Diário excluído com sucesso!'));
+        (doc) => Get.snackbar('Excluído!', 'Anotação excluída com sucesso!'));
     update();
   }
 }
