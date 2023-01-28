@@ -17,6 +17,13 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
   final contentController = TextEditingController();
 
   @override
+  void dispose() {
+    titleController.dispose();
+    contentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now().toLocal();
     String convertedDateTime =
@@ -78,7 +85,8 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
                   time: convertedDateTime,
                   content: contentController.text);
             },
-            child: const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
+            child:
+                const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
           ),
         ),
       ),

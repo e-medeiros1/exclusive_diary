@@ -24,6 +24,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formkey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

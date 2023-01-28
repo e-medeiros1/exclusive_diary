@@ -21,6 +21,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final recoveryEmailController = TextEditingController();
+
+  @override
+  void dispose() {
+    recoveryEmailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     String assetName = 'assets/images/google-logo.svg';
