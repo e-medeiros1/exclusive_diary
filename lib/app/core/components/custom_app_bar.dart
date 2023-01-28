@@ -26,9 +26,9 @@ class CustomAppBar extends GetxController {
       iconTheme: AppStyle.themeAppBar.iconTheme,
       actions: [
         PopupMenuButton(
-          
           onSelected: (value) {
             _onMenuItemSelected(value as int, context);
+            Get.offAllNamed('/login');
           },
           icon:
               const Icon(Icons.settings_outlined, color: AppStyle.primaryColor),

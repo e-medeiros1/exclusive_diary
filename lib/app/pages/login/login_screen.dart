@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:exclusive_diary/app/core/components/line_separator.dart';
 import 'package:exclusive_diary/app/core/theme/app_style.dart';
 import 'package:exclusive_diary/app/pages/login/email/controller/login_with_email_controller.dart';
@@ -132,16 +134,29 @@ class BottomLoginScreen extends StatelessWidget {
                         style: AppStyle.regularText,
                       ),
                     )),
-                child: Text('Esqueceu sua senha?    ',
-                    style: AppStyle.regularText),
+                child: Text('Esqueceu sua senha?', style: AppStyle.regularText),
               ),
+              const SizedBox(width: 15),
             ],
           ),
           const LineSeparator(),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: CustomElevatedButton(
-                  onPressed: () => loginWithGoogleInstance.signInWithGoogle(),
+                  onPressed: () {
+                    Timer(const Duration(seconds: 1), () {
+                      Get.defaultDialog(
+                        title: 'Carregando',
+                        titleStyle: AppStyle.mainText,
+                        content: const CircularProgressIndicator(
+                          backgroundColor: AppStyle.backgroundColor,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              AppStyle.primaryColor),
+                        ),
+                      );
+                    });
+                    loginWithGoogleInstance.signInWithGoogle();
+                  },
                   image: svgImage,
                   text: 'Entre com Google')),
           const Spacer(),

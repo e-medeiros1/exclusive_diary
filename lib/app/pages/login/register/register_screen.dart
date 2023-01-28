@@ -151,11 +151,6 @@ class BottomRegisterScreen extends StatelessWidget {
                 image: const Icon(Icons.login, color: AppStyle.primaryColor),
                 text: 'Criar conta',
                 onPressed: () {
-                  const CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(AppStyle.primaryColor),
-                    backgroundColor: AppStyle.backgroundColor,
-                  );
                   if (_formkey.currentState!.validate()) {
                     loginWithEmailInstance.createAccount(
                       username: usernameController.text.trim(),

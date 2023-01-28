@@ -86,11 +86,6 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 image: const Icon(Icons.login, color: AppStyle.primaryColor),
                 text: 'Entrar',
                 onPressed: () {
-                  const CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(AppStyle.primaryColor),
-                    backgroundColor: AppStyle.backgroundColor,
-                  );
                   if (_formkey.currentState!.validate()) {
                     loginWithEmailInstance.loginWithEmailAndPassword(
                         emailAddress: emailController.text.trim(),

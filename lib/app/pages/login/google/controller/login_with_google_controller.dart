@@ -74,17 +74,17 @@ class LoginWithGoogleController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAll('/');
+      Get.toNamed('/');
     } else {
-      Get.offAll('/home');
+      Get.toNamed('/home');
     }
   }
 
   _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
     if (googleSignInAccount == null) {
-      Get.offAll('/');
+      Get.toNamed('/');
     } else {
-      Get.offAll('/home');
+      Get.toNamed('/home');
     }
   }
 
