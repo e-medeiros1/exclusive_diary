@@ -22,65 +22,67 @@ class _HomeScreenState extends State<HomeScreen> {
     final CustomAppBar customAppBarInstance = Get.put(CustomAppBar());
     final DiaryController diaryInstance = Get.put(DiaryController());
 
-    return Scaffold(
-        backgroundColor: AppStyle.backgroundColor,
-        appBar: customAppBarInstance.buildAppBar(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StreamBuilder<QuerySnapshot>(
-                stream: diaryInstance.getDiarySnap(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                          backgroundColor: AppStyle.backgroundColor,
-                          color: AppStyle.primaryColor),
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: AppStyle.backgroundColor,
+          appBar: customAppBarInstance.buildAppBar(context),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: diaryInstance.getDiarySnap(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: AppStyle.backgroundColor,
+                            color: AppStyle.primaryColor),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return Expanded(
+                        child: GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2),
+                          children: snapshot.data!.docs
+                              .map((notes) => diaryCard(
+                                  onLongPress: () {
+                                    diaryInstance.deleteDiary();
+                                  },
+                                  onTap: () {
+                                    Get.to(() => DiaryDetailScreen(
+                                          doc: notes,
+                                        ));
+                                  },
+                                  doc: notes))
+                              .toList(),
+                        ),
+                      );
+                    }
+                    return Center(
+                      child: Text('Você ainda não possui anotações.',
+                          style: AppStyle.regularText),
                     );
-                  }
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: GridView(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2),
-                        children: snapshot.data!.docs
-                            .map((notes) => diaryCard(
-                                onLongPress: () {
-                                  diaryInstance.deleteDiary();
-                                },
-                                onTap: () {
-                                  Get.to(() => DiaryDetailScreen(
-                                        doc: notes,
-                                      ));
-                                },
-                                doc: notes))
-                            .toList(),
-                      ),
-                    );
-                  }
-                  return Center(
-                    child: Text('Você ainda não possui anotações.',
-                        style: AppStyle.regularText),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          icon: const Icon(Icons.add, color: AppStyle.primaryColor),
-          backgroundColor: AppStyle.secondaryColor,
-          onPressed: () {
-            Get.to(() => const DiaryEditScreen());
-          },
-          label: Text(
-            'Crie uma história',
-            style: AppStyle.regularText,
-          ),
-        ));
+          floatingActionButton: FloatingActionButton.extended(
+            icon: const Icon(Icons.add, color: AppStyle.primaryColor),
+            backgroundColor: AppStyle.secondaryColor,
+            onPressed: () {
+              Get.to(() => const DiaryEditScreen());
+            },
+            label: Text(
+              'Crie uma história',
+              style: AppStyle.regularText,
+            ),
+          )),
+    );
   }
 }

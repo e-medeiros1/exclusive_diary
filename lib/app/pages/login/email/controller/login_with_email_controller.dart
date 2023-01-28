@@ -57,8 +57,9 @@ class LoginWithEmailController extends GetxController {
   }
 
   resetPassword({required String email}) async {
-    await instance.sendPasswordResetEmail(email: email).catchError((e) =>
-        Get.snackbar('Recuperação de senha!', 'Email de recuperação enviado.'));
+    await instance.sendPasswordResetEmail(email: email).catchError((error) =>
+        Get.snackbar(
+            'Recuperação de senha!', 'Erro ao enviar email de recuperação.'));
   }
 
   @override

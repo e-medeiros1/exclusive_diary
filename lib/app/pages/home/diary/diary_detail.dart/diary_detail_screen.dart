@@ -19,28 +19,30 @@ class DiaryDetailScreen extends StatefulWidget {
 class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppStyle.backgroundColor,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: AppStyle.primaryColor),
-        centerTitle: true,
-        elevation: 0,
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: AppStyle.backgroundColor,
-        title: Text(
-          widget.doc['diary_title'],
-          style: AppStyle.mainText
-              .copyWith(fontFamily: 'DancingScript-Regular', fontSize: 32),
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: AppStyle.primaryColor),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: AppStyle.backgroundColor,
+          title: Text(
+            widget.doc['diary_title'],
+            style: AppStyle.mainText
+                .copyWith(fontFamily: 'DancingScript-Regular', fontSize: 32),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.doc['creation_date'], style: AppStyle.mainText),
-            const SizedBox(height: 28),
-            Text(widget.doc['diary_content'], style: AppStyle.regularText),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.doc['creation_date'], style: AppStyle.mainText),
+              const SizedBox(height: 28),
+              Text(widget.doc['diary_content'], style: AppStyle.regularText),
+            ],
+          ),
         ),
       ),
     );

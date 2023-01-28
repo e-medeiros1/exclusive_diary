@@ -28,25 +28,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          backgroundColor: AppStyle.backgroundColor,
-          body: Form(
-            key: _formkey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const TopRegisterScreen(),
-                  BottomRegisterScreen(
-                      usernameController: usernameController,
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      formkey: _formkey,
-                      loginWithEmailInstance: loginWithEmailInstance)
-                ],
+      child: SafeArea(
+        child: Scaffold(
+            backgroundColor: AppStyle.backgroundColor,
+            body: Form(
+              key: _formkey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const TopRegisterScreen(),
+                    BottomRegisterScreen(
+                        usernameController: usernameController,
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        formkey: _formkey,
+                        loginWithEmailInstance: loginWithEmailInstance)
+                  ],
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }
@@ -59,7 +60,7 @@ class TopRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .42,
+      height: MediaQuery.of(context).size.height * .43,
       width: MediaQuery.of(context).size.width,
       child: Center(
           child: Column(
@@ -100,9 +101,10 @@ class BottomRegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .58,
+      height: MediaQuery.of(context).size.height * .57,
       width: MediaQuery.of(context).size.width * .95,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomTextField.email(
             textEditingController: usernameController,
@@ -173,8 +175,8 @@ class BottomRegisterScreen extends StatelessWidget {
                   Text('Já possui uma conta?', style: AppStyle.regularText),
                   TextButton(
                       style: ButtonStyle(
-                          overlayColor:
-                              MaterialStateProperty.all(AppStyle.primaryColor)),
+                          overlayColor: MaterialStateProperty.all(
+                              AppStyle.secondaryColor)),
                       onPressed: () => Get.to(() => const LoginScreen()),
                       child: Text(
                         'Faça login!',
@@ -184,6 +186,9 @@ class BottomRegisterScreen extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .1,
           ),
         ],
       ),

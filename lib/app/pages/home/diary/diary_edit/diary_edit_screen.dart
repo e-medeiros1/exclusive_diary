@@ -24,60 +24,62 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        backgroundColor: AppStyle.backgroundColor,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: AppStyle.primaryColor),
-          elevation: 0,
-          centerTitle: true,
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: AppStyle.backgroundColor,
-          title: Text(
-            'Escreva sua história',
-            style: AppStyle.mainText
-                .copyWith(fontFamily: 'DancingScript-Regular', fontSize: 32),
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: AppStyle.primaryColor),
+            elevation: 0,
+            centerTitle: true,
+            backgroundColor: AppStyle.backgroundColor,
+            title: Text(
+              'Escreva sua história',
+              style: AppStyle.mainText
+                  .copyWith(fontFamily: 'DancingScript-Regular', fontSize: 32),
+            ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextFormField(
-                style: AppStyle.mainText,
-                controller: titleController,
-                cursorColor: AppStyle.primaryColor,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Adicione um título',
-                  hintStyle: AppStyle.mainText,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(convertedDateTime, style: AppStyle.mainText),
-              const SizedBox(height: 28),
-              TextFormField(
-                style: AppStyle.regularText,
-                controller: contentController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                cursorColor: AppStyle.primaryColor,
-                decoration: InputDecoration(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextFormField(
+                  style: AppStyle.mainText,
+                  controller: titleController,
+                  cursorColor: AppStyle.primaryColor,
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Descreva como foi seu dia',
-                    hintStyle: AppStyle.regularText),
-              ),
-            ],
+                    hintText: 'Adicione um título',
+                    hintStyle: AppStyle.mainText,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(convertedDateTime, style: AppStyle.mainText),
+                const SizedBox(height: 28),
+                TextFormField(
+                  style: AppStyle.regularText,
+                  controller: contentController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  cursorColor: AppStyle.primaryColor,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Descreva como foi seu dia',
+                      hintStyle: AppStyle.regularText),
+                ),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppStyle.secondaryColor,
-          onPressed: () {
-            diaryInstance.diaryEdit(
-                title: titleController.text,
-                time: convertedDateTime,
-                content: contentController.text);
-          },
-          child: const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: AppStyle.secondaryColor,
+            onPressed: () {
+              diaryInstance.diaryEdit(
+                  title: titleController.text,
+                  time: convertedDateTime,
+                  content: contentController.text);
+            },
+            child: const Icon(Icons.check_outlined, color: AppStyle.primaryColor),
+          ),
         ),
       ),
     );
