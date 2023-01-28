@@ -68,11 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               .toList(),
                         ),
                       );
+                    } else {
+                      return Center(
+                        child: Text('Você ainda não possui anotações.',
+                            style: AppStyle.regularText),
+                      );
                     }
-                    return Center(
-                      child: Text('Você ainda não possui anotações.',
-                          style: AppStyle.regularText),
-                    );
                   },
                 ),
               ],

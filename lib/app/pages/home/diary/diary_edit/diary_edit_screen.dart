@@ -16,12 +16,12 @@ class _DiaryEditScreenState extends State<DiaryEditScreen> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
-  @override
-  void dispose() {
-    titleController.dispose();
-    contentController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   titleController.dispose();
+  //   contentController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

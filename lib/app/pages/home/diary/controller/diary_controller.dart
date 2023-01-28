@@ -15,13 +15,12 @@ class DiaryController extends GetxController {
   diaryEdit({title, time, content}) {
     instance
         .collection('Diary')
-        .doc('users')
-        .set({
+        .add({
           'diary_title': title,
           'creation_date': time,
           'diary_content': content,
         })
-        .then((value) => Get.offNamed('/home'))
+        .then((value) => Get.toNamed('/home'))
         .catchError(
           (error) {
             log('Não foi possível salvar sua anotação!', error: error);
@@ -33,7 +32,7 @@ class DiaryController extends GetxController {
 
   deleteDiary() {
     instance.collection('Diary').doc('users').delete().then(
-        (doc) => Get.snackbar('Excluído!', 'Anotação excluída com sucesso!'));
+        (doc) => Get.snackbar('Excluído!', 'Anotação excluídas com sucesso!'));
     update();
   }
 }
