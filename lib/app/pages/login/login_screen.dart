@@ -1,6 +1,8 @@
 import 'package:exclusive_diary/app/core/components/line_separator.dart';
 import 'package:exclusive_diary/app/core/theme/app_style.dart';
+import 'package:exclusive_diary/app/pages/login/email/controller/login_with_email_controller.dart';
 import 'package:exclusive_diary/app/pages/login/email/email_login_screen.dart';
+import 'package:exclusive_diary/app/pages/login/email/widgets/custom_text_field.dart';
 import 'package:exclusive_diary/app/pages/login/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,25 +19,32 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final recoveryEmailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String assetName = 'assets/images/google-logo.svg';
     final Widget svgImage = SvgPicture.asset(assetName);
     final loginWithGoogleInstance = Get.put(LoginWithGoogleController());
+    final loginWithEmailInstance = Get.put(LoginWithEmailController());
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          backgroundColor: AppStyle.backgroundColor,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const TopLoginScreen(),
-                BottomLoginScreen(
-                    loginWithGoogleInstance: loginWithGoogleInstance,
-                    svgImage: svgImage),
-              ],
-            ),
-          )),
+      child: SafeArea(
+        child: SafeArea(
+          child: Scaffold(
+              backgroundColor: AppStyle.backgroundColor,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const TopLoginScreen(),
+                    BottomLoginScreen(
+                        loginWithEmailInstance: loginWithEmailInstance,
+                        loginWithGoogleInstance: loginWithGoogleInstance,
+                        svgImage: svgImage),
+                  ],
+                ),
+              )),
+        ),
+      ),
     );
   }
 }
@@ -48,7 +57,7 @@ class TopLoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .42,
+      height: MediaQuery.of(context).size.height * .43,
       width: MediaQuery.of(context).size.width,
       child: Center(
           child: Column(
@@ -73,22 +82,63 @@ class TopLoginScreen extends StatelessWidget {
 class BottomLoginScreen extends StatelessWidget {
   const BottomLoginScreen({
     super.key,
+    required this.loginWithEmailInstance,
     required this.loginWithGoogleInstance,
     required this.svgImage,
   });
 
   final LoginWithGoogleController loginWithGoogleInstance;
+  final LoginWithEmailController loginWithEmailInstance;
   final Widget svgImage;
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController recoveryEmail = TextEditingController();
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .58,
+      height: MediaQuery.of(context).size.height * .57,
       width: MediaQuery.of(context).size.width * .95,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const EmailLoginScreen(),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () => Get.defaultDialog(
+                    backgroundColor: AppStyle.backgroundColor,
+                    titleStyle: AppStyle.mainText,
+                    title: 'Recuperação de senha!',
+                    titlePadding: const EdgeInsets.only(top: 20),
+                    contentPadding: const EdgeInsets.all(20),
+                    content: CustomTextField.email(
+                        textEditingController: recoveryEmail,
+                        hintText: 'Digite um email de recuperação'),
+                    confirm: CustomElevatedButton(
+                      image: const Icon(
+                        Icons.mail_outline,
+                        color: AppStyle.primaryColor,
+                      ),
+                      text: 'Enviar email',
+                      onPressed: () {
+                        loginWithEmailInstance.resetPassword(
+                            email: recoveryEmail.text);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    cancel: TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(
+                        'Cancelar',
+                        style: AppStyle.regularText,
+                      ),
+                    )),
+                child: Text('Esqueceu sua senha?    ',
+                    style: AppStyle.regularText),
+              ),
+            ],
+          ),
           const LineSeparator(),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -96,7 +146,6 @@ class BottomLoginScreen extends StatelessWidget {
                   onPressed: () => loginWithGoogleInstance.signInWithGoogle(),
                   image: svgImage,
                   text: 'Entre com Google')),
-          const Spacer(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -107,8 +156,8 @@ class BottomLoginScreen extends StatelessWidget {
                       style: AppStyle.regularText),
                   TextButton(
                       style: ButtonStyle(
-                          overlayColor:
-                              MaterialStateProperty.all(AppStyle.primaryColor)),
+                          overlayColor: MaterialStateProperty.all(
+                              AppStyle.secondaryColor)),
                       onPressed: () => Get.to(() => const RegisterScreen()),
                       child: Text('Cadastre-se!',
                           style: AppStyle.mainText
