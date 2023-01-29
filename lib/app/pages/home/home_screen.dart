@@ -32,50 +32,52 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 StreamBuilder<QuerySnapshot>(
-                  stream: diaryInstance.getDiarySnap(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: CircularProgressIndicator(
-                              backgroundColor: AppStyle.backgroundColor,
-                              color: AppStyle.primaryColor),
-                        ),
-                      );
-                    }
-                    if (snapshot.hasData) {
+                    stream: diaryInstance.getDiary(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Você ainda não possui anotações.',
+                              style: AppStyle.regularText),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: CircularProgressIndicator(
+                                backgroundColor: AppStyle.backgroundColor,
+                                color: AppStyle.primaryColor),
+                          ),
+                        );
+                      }
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: Text('Você ainda não possui anotações.',
+                              style: AppStyle.regularText),
+                        );
+                      }
+
                       return Expanded(
-                        child: GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          children: snapshot.data!.docs
-                              .map((notes) => diaryCard(
-                                  onLongPress: () {
-                                    diaryInstance.deleteDiary();
-                                  },
-                                  onTap: () {
-                                    Get.to(
-                                        () => DiaryDetailScreen(
-                                              doc: notes,
-                                            ),
-                                        curve: Curves.easeIn,
-                                        transition: Transition.fadeIn,
-                                        routeName: '/detail');
-                                  },
-                                  doc: notes))
-                              .toList(),
-                        ),
-                      );
-                    } else {
-                      return Center(
-                        child: Text('Você ainda não possui anotações.',
-                            style: AppStyle.regularText),
-                      );
-                    }
-                  },
-                ),
+                          child: GridView(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                              children: snapshot.data!.docs
+                                  .map((notes) => diaryCard(
+                                      onLongPress: () {
+                                        diaryInstance.deleteDiary();
+                                      },
+                                      onTap: () {
+                                        Get.to(
+                                            () => DiaryDetailScreen(doc: notes),
+                                            curve: Curves.easeIn,
+                                            transition: Transition.fadeIn,
+                                            routeName: '/detail');
+                                      },
+                                      doc: notes))
+                                  .toList()
+                                  .cast()));
+                    }),
               ],
             ),
           ),
