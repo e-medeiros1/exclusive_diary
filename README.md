@@ -1,5 +1,8 @@
 # <p align="center">
+  
 
+<p align="center">
+      <img src="https://user-images.githubusercontent.com/73318684/215303514-8101d7f7-8b19-45eb-969a-ef4a3f3c10fb.png" width="150" alt="Logo Diary"/>
 <h2 align="center"> Exclusive diary com integração ao firebase e GetX! </br></br> 
 
 <img src="https://img.shields.io/badge/dart-C.svg?style=for-the-badge&logo=dart&color=152030">
